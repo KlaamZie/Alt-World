@@ -54,7 +54,7 @@ export default class Camera
             this.animateCamera = false
             this.instance.position.z = 60
 
-            const texts = ["[Yokku] Pilote automatique : Désactivé.", "[Yokku] Tous les projets ont été initialisé." ,"[Yokku] Bienvenue sur Alt World aventurier !"]
+            const texts = ["[Yokku] Pilote automatique : Désactivé.", "[Yokku] Tous les projets ont été initialisés." ,"[Yokku] Bienvenue sur Alt World aventurier !"]
             const splitted = []
             texts.forEach((text) => {
                 text.split('').forEach((letter) => {

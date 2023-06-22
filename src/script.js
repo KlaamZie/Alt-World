@@ -35,13 +35,13 @@ soundOffButton.addEventListener('touchstart', () => {
 })
 
 const cutSound = () => {
-    sound.volume = 0
+    sound.pause()
     soundOnButton.style.display = 'none'
     soundOffButton.style.display = 'block'
 }
 
 const uncutSound = () => {
-    sound.volume = 1
+    sound.play()
     soundOnButton.style.display = 'block'
     soundOffButton.style.display = 'none'
 }
