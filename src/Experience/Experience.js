@@ -1,14 +1,18 @@
 import * as THREE from 'three'
+import * as CANNON from 'cannon-es'
 
 import Debug from './Utils/Debug.js'
 import Sizes from './Utils/Sizes.js'
 import Time from './Utils/Time.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
+import Raycaster from './Raycaster.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 
 import sources from './sources.js'
+import Stats from 'three/examples/jsm/libs/stats.module'
+import Overlay from "./Loader/Overlay.js";
 
 let instance = null
 
@@ -22,9 +26,11 @@ export default class Experience
             return instance
         }
         instance = this
-        
+
         // Global access
-        window.experience = this
+        // window.experience = this
+
+        this.maxHeight = 20
 
         // Options
         this.canvas = _canvas
@@ -33,11 +39,29 @@ export default class Experience
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.time = new Time()
+
         this.scene = new THREE.Scene()
-        this.resources = new Resources(sources)
+
         this.camera = new Camera()
+
         this.renderer = new Renderer()
+
+        this.pmrem = new THREE.PMREMGenerator(this.renderer.instance)
+
+        this.overlay = new Overlay()
+
+        this.resources = new Resources(sources)
+
         this.world = new World()
+
+        this.raycaster = new Raycaster()
+
+        // this.stats = new Stats()
+        // document.body.appendChild(this.stats.dom)
+
+        this.resources.on('ready', () => {
+            this.scene.background = this.resources.items.environmentMapTexture
+        })
 
         // Resize event
         this.sizes.on('resize', () =>
@@ -60,9 +84,17 @@ export default class Experience
 
     update()
     {
-        this.camera.update()
-        this.world.update()
+        if(this.camera) {
+            this.camera.update()
+        }
+        if(this.world) {
+            this.world.update()
+        }
+        if(this.raycaster) {
+            this.raycaster.update()
+        }
         this.renderer.update()
+        if (this.stats) this.stats.update()
     }
 
     destroy()

@@ -1,4 +1,4 @@
-# Three.js Journey
+# Tree.js Journey
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
